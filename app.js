@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import session from 'express-session';
 import connectMongo from 'connect-mongo';
+import ConnectMongoDBSession from 'connect-mongodb-session';
 
 import indexRouter from './routes/indexRouter.js';
 import { fileURLToPath } from 'url';
@@ -12,11 +13,20 @@ const __dirname = dirname(__filename);
 
 import dbConnect from './db/mongo.js';
 
+const app = express();
 // session setup
 
-const MongoStore = connectMongo(session);
+const MongoStore = ConnectMongoDBSession(session);
 
-const sessionStore = new MongoStore({ mongooseConnection: connection, collection: 'sessions' });
+const sessionStore = new MongoStore(
+  {
+    uri: 'mongodb://127.0.0.1:27017/members_clubhouse',
+    collection: 'sessions',
+  },
+  function (err) {
+    console.log(err);
+  }
+);
 
 app.use(
   session({
@@ -34,7 +44,6 @@ app.use(
 
 dbConnect();
 
-const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.set('view engine', 'ejs');

@@ -1,7 +1,7 @@
 import mongoose, { mongo } from 'mongoose';
 import { configDotenv } from 'dotenv';
 
-main().catch((err) => console.log(err));
+// main().catch((err) => console.log(err));
 
 try {
   mongoose.connect(process.env.DB_STRING1);
@@ -26,8 +26,8 @@ const postsSchema = new mongoose.Schema({
 });
 
 const sessionSchema = new mongoose.Schema({
-  sid: String,
-  Expres: Date,
+  user_id: String,
+  Expires: Date,
 });
 
 const users = mongoose.model('Users', userSchema);
