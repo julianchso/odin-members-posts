@@ -19,6 +19,7 @@ const userSchema = new mongoose.Schema({
 });
 
 const postsSchema = new mongoose.Schema({
+  id: String,
   title: String,
   message: String,
   date: Date,
