@@ -8,12 +8,18 @@
   <body>
     <div>
       <form action="/register" method="POST">
-        <input type="text" id="full-name" name="full-name" />
-        <label for="full-name">Full Name</label>
-        <input type="username" />
-        <label for="username">Username</label>
-        <input type="password" />
-        <label for="password">Password</label>
+        <section>
+          <label for="full-name">Full Name</label>
+          <input type="text" id="full-name" name="full-name" />
+        </section>
+        <section>
+          <label for="username">Username</label>
+          <input type="username" id="username" name="username" />
+        </section>
+        <section>
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" />
+        </section>
         <button type="submit">Register</button>
       </form>
     </div>

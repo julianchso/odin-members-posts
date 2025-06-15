@@ -1,13 +1,14 @@
-import mongoose, { mongo } from 'mongoose';
+import mongoose from 'mongoose';
 import { configDotenv } from 'dotenv';
 
 configDotenv();
 
+const { Schema } = mongoose;
+
 const conn = process.env.DB_STRING1;
+const connection = mongoose.createConnection(conn);
 
-const connection = mongoose.createConnection(conn, {});
-
-const userSchema = new mongoose.Schema({
+const userSchema = new Schema({
   'full-name': String,
   username: String,
   hash: String,
@@ -17,7 +18,7 @@ const userSchema = new mongoose.Schema({
   admin: Boolean,
 });
 
-const postsSchema = new mongoose.Schema({
+const postsSchema = new Schema({
   id: String,
   title: String,
   message: String,
@@ -25,13 +26,13 @@ const postsSchema = new mongoose.Schema({
   user_id: String,
 });
 
-const sessionSchema = new mongoose.Schema({
+const sessionSchema = new Schema({
   sid: String,
   Expres: Date,
 });
 
-const User = connection.model('Users', userSchema);
-const Post = connection.model('Posts', postsSchema);
-const Session = connection.model('Sessions', sessionSchema);
+const User = mongoose.model('members', userSchema);
+const Post = mongoose.model('posts', postsSchema);
+const Session = mongoose.model('sessions', sessionSchema);
 
-export default connection;
+export { connection, User, Post, Session };

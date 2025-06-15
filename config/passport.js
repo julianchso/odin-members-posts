@@ -1,9 +1,9 @@
-import express from 'express';
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import crypto from 'crypto';
 
 import { validatePassword } from '../utils/passwordUtils.js';
+import connection from '../db/database.js';
 
 const members = connection.model.members;
 
