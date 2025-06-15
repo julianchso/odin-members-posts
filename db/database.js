@@ -26,8 +26,8 @@ const postsSchema = new mongoose.Schema({
 });
 
 const sessionSchema = new mongoose.Schema({
-  user_id: String,
-  Expires: Date,
+  sid: String,
+  Expres: Date,
 });
 
 const User = connection.model('Users', userSchema);

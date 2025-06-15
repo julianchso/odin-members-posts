@@ -4,19 +4,18 @@ import mongoose from 'mongoose';
 import session from 'express-session';
 import connectMongo from 'connect-mongo';
 import ConnectMongoDBSession from 'connect-mongodb-session';
-import passport from 'passport';
 
 import indexRouter from './routes/indexRouter.js';
 import { fileURLToPath } from 'url';
 import path, { dirname } from 'path';
-// import passport from './config/passport.js';
+import connection from './db/database.js';
+import passport from './config/passport.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 import dbConnect from './db/mongo.js';
 
-const app = express();
 // session setup
 
 app.use(passport.initialize());
@@ -24,15 +23,7 @@ app.use(passport.session());
 
 const MongoStore = ConnectMongoDBSession(session);
 
-const sessionStore = new MongoStore(
-  {
-    uri: 'mongodb://127.0.0.1:27017/members_clubhouse',
-    collection: 'sessions',
-  },
-  function (err) {
-    console.log(err);
-  }
-);
+const sessionStore = new MongoStore({ mongooseConnection: connection, collection: 'sessions' });
 
 app.use(
   session({
@@ -50,6 +41,7 @@ app.use(
 
 dbConnect();
 
+const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.set('view engine', 'ejs');
