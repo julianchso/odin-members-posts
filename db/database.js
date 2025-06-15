@@ -1,18 +1,17 @@
 import mongoose, { mongo } from 'mongoose';
 import { configDotenv } from 'dotenv';
 
-// main().catch((err) => console.log(err));
+configDotenv();
 
-try {
-  mongoose.connect(process.env.DB_STRING1);
-} catch (err) {
-  handleError(err);
-}
+const conn = process.env.DB_STRING1;
+
+const connection = mongoose.createConnection(conn, {});
 
 const userSchema = new mongoose.Schema({
   'full-name': String,
   username: String,
-  password: String,
+  hash: String,
+  salt: String,
   post_id: Array,
   'membership-status': Boolean,
   admin: Boolean,
@@ -31,6 +30,8 @@ const sessionSchema = new mongoose.Schema({
   Expires: Date,
 });
 
-const users = mongoose.model('Users', userSchema);
-const posts = mongoose.model('Posts', postsSchema);
-const session = mongoose.model('Sessions', sessionSchema);
+const User = connection.model('Users', userSchema);
+const Post = connection.model('Posts', postsSchema);
+const Session = connection.model('Sessions', sessionSchema);
+
+export default connection;

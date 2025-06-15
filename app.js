@@ -4,10 +4,13 @@ import mongoose from 'mongoose';
 import session from 'express-session';
 import connectMongo from 'connect-mongo';
 import ConnectMongoDBSession from 'connect-mongodb-session';
+import passport from 'passport';
 
 import indexRouter from './routes/indexRouter.js';
 import { fileURLToPath } from 'url';
 import path, { dirname } from 'path';
+// import passport from './config/passport.js';
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -15,6 +18,9 @@ import dbConnect from './db/mongo.js';
 
 const app = express();
 // session setup
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 const MongoStore = ConnectMongoDBSession(session);
 
