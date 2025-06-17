@@ -1,6 +1,7 @@
+import passport from 'passport';
+
 import { Router } from 'express';
 import indexController from '../controllers/indexController.js';
-import passport from 'passport';
 
 const indexRouter = Router();
 
@@ -10,12 +11,7 @@ indexRouter.get('/login', indexController.loginGet);
 
 indexRouter.post('/register', indexController.registerPost);
 
-indexRouter.post(
-  '/login',
-  passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/login',
-  })
-);
+indexRouter.post('/login', indexController.loginPost);
+// indexRouter.post('/login', passport.authenticate('local'), (req, res) => {});
 
 export default indexRouter;

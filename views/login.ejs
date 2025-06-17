@@ -9,15 +9,18 @@
     <div>
       <form action="/login" method="POST">
         <section>
-          <input type="username" />
           <label for="username">Username</label>
+          <input type="username" id="username" name="username" />
         </section>
         <section>
-          <input type="password" />
           <label for="password">Password</label>
+          <input type="password" id="password" name="password" />
         </section>
+        <button type="submit">Login</button>
       </form>
-      <button type="submit">Login</button>
+    </div>
+    <div>
+      <a href="/">Back to Home</a>
     </div>
   </body>
 </html>

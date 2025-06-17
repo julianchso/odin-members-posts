@@ -1,7 +1,7 @@
+import passport from 'passport';
+
 import { genPassword } from '../utils/passwordUtils.js';
-// import connection from '../db/database.js';
 import { User } from '../db/database.js';
-// const User = connection.models.User;
 
 const homeGet = (req, res) => {
   res.render('home', {
@@ -17,10 +17,6 @@ const registerGet = (req, res) => {
 };
 
 const registerPost = (req, res, next) => {
-  console.log(`username ${req.body.username}`);
-  console.log(`full name: ${req.body['full-name']}`);
-  console.log(`password: ${req.body.password}`);
-
   const saltHash = genPassword(req.body.password);
 
   const salt = saltHash.salt;
@@ -50,4 +46,14 @@ const loginGet = (req, res) => {
     };
 };
 
-export default { homeGet, registerGet, registerPost, loginGet };
+const loginPost = () => {
+  passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/login',
+  }),
+    (req, res, next) => {
+      console.log(res);
+    };
+};
+
+export default { homeGet, registerGet, registerPost, loginGet, loginPost };
