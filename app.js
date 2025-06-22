@@ -1,15 +1,14 @@
 import express, { urlencoded } from 'express';
 import bodyParser from 'body-parser';
-import ConnectMongoDBSession from 'connect-mongodb-session';
 import { fileURLToPath } from 'url';
 import path, { dirname } from 'path';
 import session from 'express-session';
+import MongoStore from 'connect-mongo';
 import passport from 'passport';
 
 import indexRouter from './routes/indexRouter.js';
-import { connection } from './db/database.js';
-import passportConfig from './config/passport.js';
 import dbConnect from './db/mongo.js';
+import { connection } from './db/database.js';
 import { configDotenv } from 'dotenv';
 import './config/passport.js';
 
@@ -25,21 +24,37 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'));
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
+
 // session setup
+const MongoDBStore = MongoStore.create({
+  mongoUrl: process.env.DB_URI,
+  dbName: 'members_clubhouse',
+  collectionName: 'sessions',
+  ttl: 1000 * 60 * 60 * 24, // equals 1 day
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24, // equals 1 day (1000 milliseconds * 60 seconds * 60 minutes * 24 hours)
+  },
+});
 
-const MongoStore = ConnectMongoDBSession(session);
+console.log(process.env.DB_URI);
 
-const sessionStore = new MongoStore({ mongooseConnection: connection, collection: 'sessions' });
-console.log(sessionStore.client.s.url);
+MongoDBStore.on('error', (err) => {
+  console.log(err);
+});
 
 app.use(
   session({
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
-    store: sessionStore,
+    store: MongoStore.create({
+      mongoUrl: process.env.DB_URI,
+      dbName: 'members_clubhouse',
+      collectionName: 'sessions',
+      ttl: 60 * 60 * 24,
+    }),
     cookie: {
-      maxAge: 100 * 60 * 60 * 24, // equals 1 day
+      maxAge: 1000 * 60 * 60 * 24, // equals 1 day (1000 milliseconds * 60 seconds * 60 minutes * 24 hours)
     },
   })
 );

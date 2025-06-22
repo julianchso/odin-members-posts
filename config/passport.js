@@ -31,7 +31,11 @@ passport.serializeUser((user, cb) => {
 });
 
 passport.deserializeUser((userId, cb) => {
-  users.findById(userId).then((user) => {
-    cb(null, user);
-  });
+  try {
+    Member.findById(userId).then((user) => {
+      cb(null, user);
+    });
+  } catch (err) {
+    cb(err, null);
+  }
 });

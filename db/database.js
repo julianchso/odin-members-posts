@@ -5,7 +5,7 @@ configDotenv();
 
 const { Schema } = mongoose;
 
-const conn = process.env.DB_STRING1;
+const conn = process.env.DB_URI;
 const connection = mongoose.createConnection(conn);
 
 const memberSchema = new Schema({
