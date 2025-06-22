@@ -11,7 +11,10 @@ indexRouter.get('/login', indexController.loginGet);
 
 indexRouter.post('/register', indexController.registerPost);
 
-indexRouter.post('/login', indexController.loginPost);
-// indexRouter.post('/login', passport.authenticate('local'), (req, res) => {});
+// indexRouter.post('/login', indexController.loginPost);
+indexRouter.post('/login', passport.authenticate('local'), (req, res) => {
+  // console.log(res);
+  // console.log('authenticated!');
+});
 
 export default indexRouter;

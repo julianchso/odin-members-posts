@@ -30,6 +30,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const MongoStore = ConnectMongoDBSession(session);
 
 const sessionStore = new MongoStore({ mongooseConnection: connection, collection: 'sessions' });
+console.log(sessionStore.client.s.url);
 
 app.use(
   session({

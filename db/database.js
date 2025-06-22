@@ -8,7 +8,7 @@ const { Schema } = mongoose;
 const conn = process.env.DB_STRING1;
 const connection = mongoose.createConnection(conn);
 
-const userSchema = new Schema({
+const memberSchema = new Schema({
   'full-name': String,
   username: String,
   hash: String,
@@ -31,8 +31,8 @@ const sessionSchema = new Schema({
   Expres: Date,
 });
 
-const User = mongoose.model('members', userSchema);
+const Member = mongoose.model('members', memberSchema);
 const Post = mongoose.model('posts', postsSchema);
 const Session = mongoose.model('sessions', sessionSchema);
 
-export { connection, User, Post, Session };
+export { connection, Member, Post, Session };

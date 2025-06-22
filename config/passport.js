@@ -2,16 +2,11 @@ import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 
 import { validatePassword } from '../utils/passwordUtils.js';
-import { connection } from '../db/database.js';
-
-const members = connection.model.members;
+import { Member } from '../db/database.js';
 
 export default passport.use(
   new LocalStrategy((username, password, cb) => {
-    console.log(`username: ${username}`);
-    console.log(`password: ${password}`);
-    members
-      .findOne({ username: username })
+    Member.findOne({ username: username })
       .then((user) => {
         if (!user) {
           return cb(null, false);
@@ -30,10 +25,6 @@ export default passport.use(
       });
   })
 );
-
-// const strategy = new LocalStrategy(verify());
-
-// passport.use(strategy);
 
 passport.serializeUser((user, cb) => {
   cb(null, user.id);
