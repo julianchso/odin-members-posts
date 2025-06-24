@@ -5,5 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><% title %></title>
   </head>
-  <body></body>
+  <body>
+    <%- include('./partials/nav.ejs') %>
+    <ul>
+      <% posts.forEach(post => { %>
+      <li>Title: <%= post.title %></li>
+      <li>User: <%= user %></li>
+      <li>Date: <%= post.date %></li>
+      <li>Post: <%= post.post %></li>
+      <% }); %>
+    </ul>
+  </body>
 </html>

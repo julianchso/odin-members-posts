@@ -1,9 +1,21 @@
 import { Post } from '../db/database.js';
 
-const postsGet = (req, res) => {
-  res.render('posts', {
-    title: 'Posts',
-  });
+const postsGet = async (req, res) => {
+  const posts = await Post.find({});
+
+  if (req.user) {
+    res.render('posts', {
+      title: 'Posts',
+      user: req.user.username,
+      posts: posts,
+    });
+  } else {
+    res.render('posts', {
+      title: 'Posts',
+      user: '****',
+      posts: posts,
+    });
+  }
 };
 
 const newPostGet = (req, res) => {
@@ -13,17 +25,16 @@ const newPostGet = (req, res) => {
 };
 
 const newPostPost = (req, res) => {
-  console.log(req.user._id.valueOf());
+  console.log(req.user.username);
   const newPost = new Post({
     title: req.body.title,
     post: req.body.post,
     date: new Date(),
+    username: req.user.username,
     user_id: req.user._id.valueOf(),
   });
 
-  newPost.save().then((post) => {
-    console.log(post);
-  });
+  newPost.save();
 
   res.redirect('/posts');
 };
