@@ -21,7 +21,7 @@ const memberSchema = new Schema({
 const postsSchema = new Schema({
   id: String,
   title: String,
-  message: String,
+  post: String,
   date: Date,
   user_id: String,
 });

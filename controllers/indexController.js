@@ -4,9 +4,16 @@ import { genPassword } from '../utils/passwordUtils.js';
 import { Member } from '../db/database.js';
 
 const homeGet = (req, res) => {
-  res.render('home', {
-    title: 'Home',
-  });
+  if (req.user) {
+    res.render('home', {
+      title: 'Home',
+      user: req.user.username,
+    });
+  } else {
+    res.render('home', {
+      title: 'Home',
+    });
+  }
 };
 
 const registerGet = (req, res) => {
@@ -56,4 +63,13 @@ const loginPost = () => {
     };
 };
 
-export default { homeGet, registerGet, registerPost, loginGet, loginPost };
+const logoutPost = (req, res, next) => {
+  req.logOut((err) => {
+    if (err) {
+      return next(err);
+    }
+    res.redirect('/');
+  });
+};
+
+export default { homeGet, registerGet, registerPost, loginGet, loginPost, logoutPost };

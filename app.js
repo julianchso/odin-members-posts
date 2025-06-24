@@ -6,10 +6,11 @@ import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import passport from 'passport';
 
-import indexRouter from './routes/indexRouter.js';
-import dbConnect from './db/mongo.js';
 import { configDotenv } from 'dotenv';
 import './config/passport.js';
+import indexRouter from './routes/indexRouter.js';
+import postsRouter from './routes/postsRouter.js';
+import dbConnect from './db/mongo.js';
 
 configDotenv();
 
@@ -44,6 +45,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 app.use('/', indexRouter);
+app.use('/posts', postsRouter);
 
 dbConnect();
 

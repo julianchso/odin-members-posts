@@ -28,7 +28,6 @@ export default passport.use(
 
 passport.serializeUser((user, cb) => {
   cb(null, user.id);
-  console.log(typeof user.id);
 });
 
 passport.deserializeUser((userId, cb) => {

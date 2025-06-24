@@ -1,6 +1,11 @@
 import { Router } from 'express';
-import { newPostGet } from '../controllers/postsController.js';
+import postsController from '../controllers/postsController.js';
 
-const messageRouter = Router();
+const postRouter = Router();
 
-messageRouter.get('/newPost', newPostGet);
+postRouter.get('/', postsController.postsGet);
+postRouter.get('/newPost', postsController.newPostGet);
+
+postRouter.post('/newPost', postsController.newPostPost);
+
+export default postRouter;

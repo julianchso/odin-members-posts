@@ -3,19 +3,21 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><% title%></title>
+    <title><% title %></title>
   </head>
   <body>
     <div class="new-post">
-      <form action="" method="POST">
+      <form action="/posts/newPost" method="POST">
         <div>
-          <label for="title" name="title" id="title"></label>
-          <input type="text" minlength="3" required />
+          <label for="title" id="title">Title</label>
+          <input type="text" name="title" minlength="3" required />
         </div>
         <div>
-          <label for="message" name="message" id="message"></label>
-          <textarea name="message" id="message" required></textarea>
+          <label for="post" id="post">Post</label>
+          <textarea name="post" id="post" required></textarea>
         </div>
+        <a href="/"><button type="button" name="cancel">Cancel</button></a>
+        <button type="submit" name="submit">Submit</button>
       </form>
     </div>
   </body>

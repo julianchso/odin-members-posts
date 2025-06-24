@@ -19,4 +19,6 @@ indexRouter.post(
   })
 );
 
+indexRouter.get('/logout', indexController.logoutPost);
+
 export default indexRouter;
