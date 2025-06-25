@@ -27,13 +27,7 @@ const postsSchema = new Schema({
   username: String,
 });
 
-// const sessionSchema = new Schema({
-//   sid: String,
-//   Express: Date,
-// });
-
 const Member = mongoose.model('members', memberSchema);
 const Post = mongoose.model('posts', postsSchema);
-// const Session = mongoose.model('sessions', sessionSchema);
 
 export { connection, Member, Post };

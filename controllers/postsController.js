@@ -1,4 +1,4 @@
-import { Post } from '../db/database.js';
+import { Post, Member } from '../db/database.js';
 
 const postsGet = async (req, res) => {
   const posts = await Post.find({});
@@ -25,7 +25,6 @@ const newPostGet = (req, res) => {
 };
 
 const newPostPost = (req, res) => {
-  console.log(req.user.username);
   const newPost = new Post({
     title: req.body.title,
     post: req.body.post,
@@ -34,17 +33,37 @@ const newPostPost = (req, res) => {
     user_id: req.user._id.valueOf(),
   });
 
+  let postId;
+
   newPost.save();
+
+  const getPostID = () => {
+    postId = newPost._id.valueOf();
+  };
+
+  getPostID();
+
+  const addPostToUserArray = async (userId, postId) => {
+    try {
+      const updateUserPost = await Member.findByIdAndUpdate(
+        userId,
+        { $push: { post_id: postId } },
+        { new: true }
+      );
+
+      if (updateUserPost) {
+        console.log('Post added successfully to user', updateUserPost);
+      } else {
+        console.log('post not updated to user');
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  addPostToUserArray(req.user._id, postId);
 
   res.redirect('/posts');
 };
-
-// const postsSchema = new Schema({
-//   id: String,
-//   title: String,
-//   post: String,
-//   date: Date,
-//   user_id: String,
-// });
 
 export default { postsGet, newPostGet, newPostPost };
