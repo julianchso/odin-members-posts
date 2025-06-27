@@ -1,7 +1,7 @@
 import passport from 'passport';
 
 import { genPassword } from '../utils/passwordUtils.js';
-import { Member } from '../db/database.js';
+import { Members } from '../db/database.js';
 
 const homeGet = (req, res) => {
   if (req.user) {
@@ -29,7 +29,7 @@ const registerPost = (req, res, next) => {
   const salt = saltHash.salt;
   const hash = saltHash.hash;
 
-  const newUser = new Member({
+  const newUser = new Members({
     'full-name': req.body['full-name'],
     username: req.body.username,
     hash: hash,

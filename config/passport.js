@@ -2,11 +2,11 @@ import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 
 import { validatePassword } from '../utils/passwordUtils.js';
-import { Member } from '../db/database.js';
+import { Members } from '../db/database.js';
 
 export default passport.use(
   new LocalStrategy((username, password, cb) => {
-    Member.findOne({ username: username })
+    Members.findOne({ username: username })
       .then((user) => {
         if (!user) {
           return cb(null, false);
@@ -32,7 +32,7 @@ passport.serializeUser((user, cb) => {
 
 passport.deserializeUser((userId, cb) => {
   try {
-    Member.findById(userId).then((user) => {
+    Members.findById(userId).then((user) => {
       cb(null, user);
     });
   } catch (err) {

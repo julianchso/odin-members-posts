@@ -1,4 +1,4 @@
-import { Post, Member } from '../db/database.js';
+import { Post, Members } from '../db/database.js';
 
 const postsGet = async (req, res) => {
   const posts = await Post.find({});
@@ -13,6 +13,7 @@ const postsGet = async (req, res) => {
     res.render('posts', {
       title: 'Posts',
       user: '****',
+      date: '****',
       posts: posts,
     });
   }
@@ -45,7 +46,7 @@ const newPostPost = (req, res) => {
 
   const addPostToUserArray = async (userId, postId) => {
     try {
-      const updateUserPost = await Member.findByIdAndUpdate(
+      const updateUserPost = await Members.findByIdAndUpdate(
         userId,
         { $push: { post_id: postId } },
         { new: true }

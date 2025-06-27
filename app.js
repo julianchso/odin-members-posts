@@ -10,6 +10,7 @@ import { configDotenv } from 'dotenv';
 import './config/passport.js';
 import indexRouter from './routes/indexRouter.js';
 import postsRouter from './routes/postsRouter.js';
+import membersRouter from './routes/membersRouter.js';
 import dbConnect from './db/mongo.js';
 
 configDotenv();
@@ -46,6 +47,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use('/', indexRouter);
 app.use('/posts', postsRouter);
+app.use('/members', membersRouter);
 
 dbConnect();
 

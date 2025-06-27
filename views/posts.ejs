@@ -11,7 +11,12 @@
       <% posts.forEach(post => { %>
       <li>Title: <%= post.title %></li>
       <li>User: <%= user %></li>
+      <!-- TODO: if authenticated -->
+      <% if (user) { %>
       <li>Date: <%= post.date %></li>
+      <% } else { %>
+      <li>Date: ****</li>
+      <% } %>
       <li>Post: <%= post.post %></li>
       <% }); %>
     </ul>

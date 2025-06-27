@@ -27,7 +27,7 @@ const postsSchema = new Schema({
   username: String,
 });
 
-const Member = mongoose.model('members', memberSchema);
+const Members = mongoose.model('members', memberSchema);
 const Post = mongoose.model('posts', postsSchema);
 
-export { connection, Member, Post };
+export { connection, Members, Post };
