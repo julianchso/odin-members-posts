@@ -21,6 +21,7 @@ const postsGet = async (req, res) => {
 
 const newPostGet = (req, res) => {
   res.render('newPost', {
+    user: req.user,
     title: 'New Post',
   });
 };

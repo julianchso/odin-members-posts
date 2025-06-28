@@ -6,6 +6,8 @@
     <title><% title %></title>
   </head>
   <body>
+    <%- include('./partials/nav.ejs') %>
+
     <div class="new-post">
       <form action="/posts/newPost" method="POST">
         <div>
